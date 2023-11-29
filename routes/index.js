@@ -5,7 +5,9 @@ const homeController = require('../controllers/homeController');
 const usuariosController = require('../controllers/usuariosController');
 
 module.exports = function(){
+    //ruta de home
     router.get('/', homeController.home);
+    //ruta de crar cuenta
     router.get('/crear-cuenta', usuariosController.formCrearCuenta);
 
     return router;

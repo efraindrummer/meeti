@@ -45,9 +45,11 @@ const Usuarios = db.define('usuarios', {
     }
 });
 
+
 //metodo para comparar los password
 Usuarios.prototype.validarPassword = function(password){
     return bcrypt.compareSync(password, this.password);
 }
+
 
 module.exports = Usuarios;

@@ -5,6 +5,8 @@ const expressEjsLayouts = require('express-ejs-layouts');
 require('dotenv').config({path: 'variables.env'});
 
 const db = require('./config/db');
+require('./models/Usuarios');
+
 db.sync().then(
     () => console.log('DB CONECTADA')
 ).catch(

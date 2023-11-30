@@ -3,6 +3,10 @@ const path = require('path');
 const router = require('./routes');
 const expressEjsLayouts = require('express-ejs-layouts');
 require('dotenv').config({path: 'variables.env'});
+const flash = require('connect-flash');
+const session = require('express-session');
+const cookieParse = require('cookie-parser');
+const bodyParser = require('body-parser');
 
 const db = require('./config/db');
 require('./models/Usuarios');
@@ -15,6 +19,8 @@ db.sync().then(
 
 const app = express();
 
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
 //habilitar ejs como template engine
 app.use(expressEjsLayouts);
 app.set('view engine', 'ejs');

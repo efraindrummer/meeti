@@ -24,6 +24,13 @@
         </nav>
     </header>
 
+    <% if(locals.mensajes) { %>
+        <% const categoria = Object.keys(locals.mensajes) %>
+        <%= categoria %>
+    <% }  %>
+
+
+
     <%- body %>
 
     <footer class="site-footer contenedor">

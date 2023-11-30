@@ -5,7 +5,7 @@ const expressEjsLayouts = require('express-ejs-layouts');
 require('dotenv').config({path: 'variables.env'});
 const flash = require('connect-flash');
 const session = require('express-session');
-const cookieParse = require('cookie-parser');
+const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 
 const db = require('./config/db');
@@ -31,8 +31,21 @@ app.set('views', path.join(__dirname, './views'));
 //archivos estaticos
 app.use(express.static('public'));
 
+//abilitar cookie parser
+app.use(cookieParser());
+app.use(session({
+    secret: process.env.SECRET,
+    key: process.env.KEY,
+    resave: false,
+    saveUninitialized: false,
+}));
+
+//agrega flashmessages
+app.use(flash());
+
 //middleware(usuario logueado, flash messages, fecha actual);
 app.use((req, res, next) => {
+    res.locals.mensajes = req.flash();
     const fecha = new Date();
     res.locals.year = fecha.getFullYear();
     next();

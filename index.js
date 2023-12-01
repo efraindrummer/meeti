@@ -2,12 +2,13 @@ const express = require('express');
 const path = require('path');
 const router = require('./routes');
 const expressEjsLayouts = require('express-ejs-layouts');
-require('dotenv').config({path: 'variables.env'});
 const flash = require('connect-flash');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
+const expressValidator = require('express-validator');
 
+require('dotenv').config({path: 'variables.env'});
 const db = require('./config/db');
 require('./models/Usuarios');
 
@@ -21,6 +22,10 @@ const app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
+
+//expres validator
+app.use(expressValidator());
+
 //habilitar ejs como template engine
 app.use(expressEjsLayouts);
 app.set('view engine', 'ejs');

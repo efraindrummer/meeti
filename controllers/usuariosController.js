@@ -1,4 +1,5 @@
 const Usuarios = require("../models/Usuarios");
+const enviarEmail = require('../handlers/emails')
 
 exports.formCrearCuenta = (req, res) => {
     res.render('crear-cuenta', {
@@ -18,6 +19,17 @@ exports.crearNuevaCuenta = async (req, res)  => {
     try {
         
         await Usuarios.create(usuario);
+
+        //url de confirmacion
+        const url = `http://${req.headers.host}/confirmar-cuenta/${usuario.email}`;
+
+        //enviar email de confirmacion
+        await enviarEmail.enviarEmail({
+            usuario,
+            url,
+            subject: 'Confirma tu cuenta de  Meeti',
+            archivo: 'confirmar-cuenta'
+        });
         
         //redireccionar
         req.flash('exito', 'Hemos enviado un email, confirma tu cuenta.')
@@ -25,7 +37,7 @@ exports.crearNuevaCuenta = async (req, res)  => {
         
         //console.log('Usuario creado', nuevoUsuario)
     } catch (error) {
-        const errorsSequelize = error.errors.map((err) => err.message);
+        const errorsSequelize = error.erros.map((err) => err.message);
         const errExp = errorsExpress.map((err) => err.message);
 
         console.log(errExp);
@@ -37,6 +49,17 @@ exports.crearNuevaCuenta = async (req, res)  => {
         req.flash('error', listErrors);
         res.redirect('/crear-cuenta');
     }
+}
+
+//confirma la suscripcion del user
+exports.confirmarCuenta = async (req, res, next) => {
+    //verificar que el usuario existe
+    const usuario = await Usuarios.findOne({ where: { email: req.params.correo }});
+    console.log(req.params.correo)
+    console.log(usuario);
+    //si no existe va a redireccionar
+
+    //si existe confirmar suscripcion y redirecciona
 }
 
 //formualrio de inicar sesion

@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 
 
-module.exports = new Sequelize('meeti', 'postgres','password', {
+module.exports = new Sequelize('meeti', 'postgres','postgres', {
     host: '127.0.0.1',
     port: '5432',
     dialect: 'postgres',

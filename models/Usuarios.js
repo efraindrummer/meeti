@@ -11,7 +11,7 @@ const Usuarios = db.define('usuarios', {
     nombre: Sequelize.STRING(60),
     image: Sequelize.STRING(30),
     email: {
-        type: Sequelize.STRING(30),
+        type: Sequelize.STRING(50),
         allowNull: false,
         validate: {
             isEmail: {msg: 'Agrega un correo valido'}

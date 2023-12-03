@@ -10,6 +10,7 @@ exports.formCrearCuenta = (req, res) => {
 exports.crearNuevaCuenta = async (req, res)  => {
     const usuario = req.body;
 
+    req.checkBody('password', 'El password debe tener al menos 6 caracteres').isLength({ min: 6 });
     req.checkBody('confirmar', 'El password confirmado no puede ir vacio').notEmpty();
     req.checkBody('confirmar', 'El password es diferente').equals(req.body.password);
 
@@ -19,7 +20,6 @@ exports.crearNuevaCuenta = async (req, res)  => {
     try {
         
         await Usuarios.create(usuario);
-
         //url de confirmacion
         const url = `http://${req.headers.host}/confirmar-cuenta/${usuario.email}`;
 
@@ -38,17 +38,17 @@ exports.crearNuevaCuenta = async (req, res)  => {
         //console.log('Usuario creado', nuevoUsuario)
     } catch (error) {
         
-        const errorsSequelize = error.errors.map((err) => err.message);
-        const errExp = errorsExpress.map((err) => err.message);
+        const erroresSequelize = error.errors.map(err => err.message);
+        const errExp = errorsExpress.map(err => err.msg);
 
-        console.log(errorsSequelize);
+        console.log(erroresSequelize);
         console.log(errExp);
 
         //unir errores
-        const listErrors = [...errorsSequelize, ...errExp];
+        const listaErrores = [...erroresSequelize, ...errExp];
 
         //console.log(errorSequelize);
-        req.flash('error', listErrors);
+        req.flash('error', listaErrores);
         res.redirect('/crear-cuenta');
     }
 }
@@ -60,8 +60,17 @@ exports.confirmarCuenta = async (req, res, next) => {
     console.log(req.params.correo)
     console.log(usuario);
     //si no existe va a redireccionar
-
+    if(!usuario){
+        req.flash('error','No existe esa cuenta');
+        res.redirect('/crear-cuenta');
+        return next();
+    }
     //si existe confirmar suscripcion y redirecciona
+    usuario.activo = 1;
+    await usuario.save();
+
+    req.flash('exito', 'La cuenta se ha confirmado, ya puedes iniciar sesion');
+    res.redirect('/iniciar-sesion');
 }
 
 //formualrio de inicar sesion

@@ -38,7 +38,7 @@ const Usuarios = db.define('usuarios', {
     tokenPassword: Sequelize.STRING,
     expiraToken: Sequelize.DATE
 }, {
-    hook: {
+    hooks: {
         beforeCreate(usuario) {
             usuario.password = bcrypt.hashSync(usuario.password, bcrypt.genSaltSync(10), null)
         },

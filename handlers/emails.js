@@ -6,12 +6,12 @@ const ejs = require('ejs');
 
 
 let transport = nodemailer.createTransport({
-    host: emailConfig.host,
-    port: emailConfig.port,
-    auth: {
-      user: emailConfig.user,
-      pass: emailConfig.pass
-    }
+  host: "sandbox.smtp.mailtrap.io",
+  port: 2525,
+  auth: {
+    user: "b01c35ff143019",
+    pass: "7c139245b49d1d"
+  }
 });
 
 
@@ -31,9 +31,11 @@ exports.enviarEmail = async (opciones) => {
       from: 'Meeti <noreply@meeti.com>',
       to: opciones.usuario.email,
       subject: opciones.subject,
+      text: "HOLA BIEVENIDO",
       html
     }
 
+    console.log("Message sent: %s", opcionesEmail.messageId);
     // enviar email
     const sendEmail = util.promisify(transport.sendMail, transport);
     return sendEmail.call(transport, opcionesEmail);

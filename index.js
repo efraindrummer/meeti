@@ -6,6 +6,7 @@ const flash = require('connect-flash');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
+const passport = require('./config/passport');
 const expressValidator = require('express-validator');
 
 require('dotenv').config({path: 'variables.env'});
@@ -44,6 +45,9 @@ app.use(session({
     resave: false,
     saveUninitialized: false,
 }));
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 //agrega flashmessages
 app.use(flash());

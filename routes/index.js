@@ -4,6 +4,8 @@ const router = express.Router();
 const homeController = require('../controllers/homeController');
 const usuariosController = require('../controllers/usuariosController');
 const authController = require('../controllers/authController');
+const adminController = require('../controllers/adminController');
+const gruposController = require('../controllers/gruposController');
 
 module.exports = function(){
     //ruta de home
@@ -15,6 +17,13 @@ module.exports = function(){
     
     router.get('/iniciar-sesion', usuariosController.formIniciarSesion);
     router.post('/iniciar-sesion', authController.autenticarUsuario);
+
+    /* ********* PANEL DE ADMIN *********s */
+    router.get('/administracion', authController.usuarioAutenticado, adminController.panelAdministracion);
+
+    /*  nuevos grupos */
+    router.get('/nuevo-grupo', authController.usuarioAutenticado, gruposController.formNuevoGrupo);
+
 
     return router;
 }

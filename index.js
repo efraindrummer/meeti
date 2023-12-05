@@ -12,6 +12,8 @@ const expressValidator = require('express-validator');
 require('dotenv').config({path: 'variables.env'});
 const db = require('./config/db');
 require('./models/Usuarios');
+require('./models/Categorias');
+require('./models/Grupos');
 
 db.sync().then(
     () => console.log('DB CONECTADA')

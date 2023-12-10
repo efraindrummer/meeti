@@ -1,7 +1,7 @@
 <main class="contenedor contenedor-formularios no-padding">
     <h1><%= nombrePagina %></h1>
 
-    <form action="/nuevo-grupo" class="default-form" method="POST">
+    <form action="/nuevo-grupo" class="default-form" method="POST" enctype="multipart/form-data">
         <div class="campo">
             <label>Nombre</label>
             <input type="text" name="nombre" placeholder="Nombre grupo">
@@ -10,7 +10,7 @@
         <div class="campo descripcion">
             <label>Descripcion</label>
             <div class="contenedor-editor">
-                <input type="hidden" id="x" name="description">
+                <input type="hidden" id="x" name="descripcion">
                 <trix-editor input="x"></trix-editor>
             </div>
         </div>

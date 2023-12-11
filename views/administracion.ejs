@@ -54,41 +54,26 @@
     </div>
 
     <div class="seccion-admin">
+
         <h2>Tus grupos</h2>
-        <li>
-            <div class="informacion-admin">
-                <h3>BlockChain Carmen campeche</h3>
-            </div>
-
-            <div class="acciones contenedor-botones">
-                <a href="#" class="btn btn-verde">Editar</a>
-                <a href="#" class="btn btn-azul2">Imagen</a>
-                <a href="#" class="btn btn-rojo">Eliminar</a>
-            </div>
-
-        </li>
-        <li>
-            <div class="informacion-admin">
-                <h3>Javascript Mexico DF</h3>
-            </div>
-
-            <div class="acciones contenedor-botones">
-                <a href="#" class="btn btn-verde">Editar</a>
-                <a href="#" class="btn btn-azul2">Imagen</a>
-                <a href="#" class="btn btn-rojo">Eliminar</a>
-            </div>
-
-        </li>
-        <li>
-            <div class="informacion-admin">
-                <h3>Nodejs Mexico</h3>
-            </div>
-
-            <div class="acciones contenedor-botones">
-                <a href="#" class="btn btn-verde">Editar</a>
-                <a href="#" class="btn btn-azul2">Imagen</a>
-                <a href="#" class="btn btn-rojo">Eliminar</a>
-            </div>
-        </li>
+        <% if(grupos.length) { %>
+            <ul>
+                <% grupos.forEach(grupo => { %>
+                <li>
+                    <div class="informacion-admin">
+                        <h3><%= grupo.nombre %></h3>
+                    </div>
+        
+                    <div class="acciones contenedor-botones">
+                        <a href="/editar-grupo/<%= grupo.id %>" class="btn btn-verde">Editar</a>
+                        <a href="/imagen-grupo/<%= grupo.id %>" class="btn btn-azul2">Imagen</a>
+                        <a href="/eliminar-grupo/<%= grupo.id %>" class="btn btn-rojo">Eliminar</a>
+                    </div>
+                </li>
+                <% }) %>
+            </ul>
+        <% } else { %>
+            <p>No tienes ungrupo creado</p>
+        <% } %>
     </div>
 </main>
